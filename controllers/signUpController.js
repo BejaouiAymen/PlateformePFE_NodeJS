@@ -40,7 +40,7 @@ router.post('/password', function(req,res,next){
                      if (err) {
                        res.status(400).json(err);
                      }
-                     res.redirect('/user/login');
+                     res.redirect('/login');
                  });
             });
         }));

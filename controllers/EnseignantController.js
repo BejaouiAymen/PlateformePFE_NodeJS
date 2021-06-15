@@ -171,6 +171,7 @@ router.get('/accept/:id', function(req,res,next){
      else if(data){
                 newpfe.accepted_by_name=data.name;
                 newpfe.accepted_by_id=data._id;
+                newpfe.accepted_by_date=new Date(Date.now()).toLocaleString().split(',')[0]
                 
                 PFE.findOneAndUpdate({_id:newpfe._id  },
                     newpfe,
@@ -240,6 +241,35 @@ router.get('/pfe', (req, res) => {
 });
 });
 
+
+router.get('/accepted/:id', (req, res) => {
+    const authcookie = req.cookies.authcookie;
+
+    jwt.verify(authcookie,"secret_key",(err,data)=>{
+        if(data){
+        
+        if((data.role=="admin")||(data.role=="Enseignant")){  
+        var query={};
+        PFE.find({accepted_by_id:req.params.id},(err, docs) => {
+            if (!err) {     
+                return res.json(docs);          
+                res.render("Enseignant/listPFE", {
+                    list: docs,
+                });
+            }
+            else {
+                console.log('Error in retrieving PFE list :' + err);
+            }
+        }).lean()
+        // execute query
+        .exec(function(error, body) {});
+        
+    }
+    
+    
+        }  
+});
+});
 
 
 

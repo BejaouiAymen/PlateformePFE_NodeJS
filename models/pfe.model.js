@@ -17,6 +17,9 @@ var Schema = new mongoose.Schema ({
     },
     accepted_by_name : {
         type : String
+    },
+    accepted_by_date : {
+        type : String
     }
 }) ;
 

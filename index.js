@@ -94,13 +94,10 @@ app.use(cookieParser());
 var authh= function checkToken (req, res, next) {
     //get authcookie from request
     const authcookie = req.cookies.authcookie;
-    console.log(req.cookies);
     console.log(authcookie);
-    console.log("aaaaaaaaaaaa");
     //verify token which is in cookie value
     jwt.verify(authcookie,"secret_key",(err,data)=>{
      if(err){
-         console.log("aaa");
         //res.redirect("/Login"); 
         
         //console.log(err);
@@ -123,17 +120,15 @@ var authh= function checkToken (req, res, next) {
         //verify token which is in cookie value
         jwt.verify(authcookie,"secret_key",(err,data)=>{
          if(err){
-             console.log("1111");
            res.sendStatus(403);
          } 
          else if(data){
           req.user = data.user;
           console.log(data);
-          if(data.role=="admin"){
+          if((data.role=="admin")||(data.role=="Enseignant")){
             next();
           }else{
               
-             console.log("22222");
             res.sendStatus(403);
           }
            

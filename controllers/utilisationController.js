@@ -146,6 +146,17 @@ router.post('/pfe/:id', function(req,res,next){
 
 
 
+router.get('/user',(req,resp)=>{
+    const authcookie = req.cookies.authcookie;
+    var id,user,delai;
+    //verify token which is in cookie value
+    jwt.verify(authcookie,"secret_key",(err,data)=>{
+      if(data){
+        resp.json(data);
+      }
+    });
+
+});
 
 
 

@@ -152,6 +152,14 @@ router.get('/infoEnseignant/:id',(req,res)=>{
 })
 
 
+router.post('/ban/:id', (req, res) => {
+
+    User.findOneAndUpdate({_id:req.params.id},  {'role':"banned"}, {new: true}, function(err, doc) {
+        if (!err) {
+            res.redirect('/login');
+        }
+    });
+});
 
 
 module.exports = router ;

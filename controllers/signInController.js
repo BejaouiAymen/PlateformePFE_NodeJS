@@ -37,14 +37,22 @@ router.post('/auth',(req,res)=>{
         jwt.verify(authcookie,"secret_key",(err,data)=>{
             if(err){
             //res.sendStatus(403);
-            if(user.role=="Etudiant"){
-                res.redirect('/etudiant');
-            }else{
-                res.redirect('/admin/etudiant');
+                if(user.role=="banned"){
+                    res.cookie('authcookie',token,{maxAge:1000,httpOnly:true});
+                    res.redirect('/banned');
+                }else{
+                    if(user.role=="Etudiant"){
+                        res.redirect('/etudiant');
+                    }else{
+                        if(user.role=="Enseignant"){
+                            res.redirect('/enseignant');
+                        }
+                    else{
+                        res.redirect('/admin/etudiant');
+                    }
+                }
+                } 
             }
-            
-            } 
-            
         });
       });
       //res.redirect('/notebook/list');
